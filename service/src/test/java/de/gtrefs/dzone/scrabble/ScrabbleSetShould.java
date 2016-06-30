@@ -97,21 +97,28 @@ public class ScrabbleSetShould {
     }
 
     @Test
-    public void indicate_which_letters_have_negative_amount(){
+    public void indicate_which_tiles_have_been_overdrawn(){
         final ScrabbleSet set = ScrabbleSet.decode("a").remove(ScrabbleSet.decode("aa"));
 
-        final List<Tile> tilesWithNegativeAmount = set.getTilesWithNegativeAmount();
+        final List<Tile> tilesWithNegativeAmount = set.getTilesWhichHaveBeenOverdrawn();
 
         assertThat(tilesWithNegativeAmount, hasItem(Tile.of('a')));
     }
 
     @Test
-    public void list_of_letters_with_negative_amount_should_not_contain_tiles_with_positive_amount(){
+    public void list_of_tiles_with_negative_amount_should_not_contain_tiles_with_positive_amount(){
         final ScrabbleSet set = ScrabbleSet.decode("ab").remove(ScrabbleSet.decode("aa"));
 
-        final List<Tile> tilesWithNegativeAmount = set.getTilesWithNegativeAmount();
+        final List<Tile> tilesWithNegativeAmount = set.getTilesWhichHaveBeenOverdrawn();
 
         assertThat(tilesWithNegativeAmount, not(hasItem(Tile.of('b'))));
+    }
+
+    @Test
+    public void indicate_whether_too_much_tiles_have_been_removed_from_set(){
+        final ScrabbleSet set = ScrabbleSet.decode("a").remove(ScrabbleSet.decode("aa"));
+
+        assertThat(set.hasTilesWhichHaveBeenOverDrawn(), is(true));
     }
 
 }

@@ -7,8 +7,8 @@ public class ScrabbleService {
         this.printer = printer;
     }
 
-    public ScrabbleSet removeTiles(String encodedScrabbleSet, ScrabbleSet set) {
-        return set.remove(ScrabbleSet.decode(encodedScrabbleSet));
+    public ScrabbleSet removeTiles(String encodedScrabbleSet, ScrabbleSet from) {
+        return from.remove(ScrabbleSet.decode(encodedScrabbleSet));
     }
 
     public void print(ScrabbleSet set) {

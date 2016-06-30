@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.*;
 
@@ -36,8 +35,8 @@ public interface ScrabbleSetPrinter extends Consumer<ScrabbleSet> {
         return entry.getKey()+": "+entry.getValue();
     }
 
-    static Function<PrintStream, ScrabbleSetPrinter> emptyMessage(String message,
-                                                                  Function<PrintStream, ScrabbleSetPrinter> next) {
+    static Function<PrintStream, ScrabbleSetPrinter> messageForEmptyScrabbleSet(String message,
+                                                                                Function<PrintStream, ScrabbleSetPrinter> next) {
         return out -> set -> {
           if(set.isEmpty())
               out.println(message);
@@ -46,12 +45,11 @@ public interface ScrabbleSetPrinter extends Consumer<ScrabbleSet> {
         };
     }
 
-    static Function<PrintStream, ScrabbleSetPrinter> errorForNegativeAmount(String message,
+    static Function<PrintStream, ScrabbleSetPrinter> errorForOverdrawnTiles(String message,
                                                                             Function<PrintStream, ScrabbleSetPrinter> next) {
         return out -> set -> {
-            final List<Tile> tilesWithNegativeAmount = set.getTilesWithNegativeAmount();
-            if(!tilesWithNegativeAmount.isEmpty()){
-                out.println(String.format(message, joinToString(tilesWithNegativeAmount)));
+            if(set.hasTilesWhichHaveBeenOverDrawn()){
+                out.println(String.format(message, joinToString(set.getTilesWhichHaveBeenOverdrawn())));
             }else{
                 next.apply(out).printSet(set);
             }
@@ -59,6 +57,6 @@ public interface ScrabbleSetPrinter extends Consumer<ScrabbleSet> {
     }
 
     static String joinToString(List<Tile> tilesWithNegativeAmount) {
-        return tilesWithNegativeAmount.stream().collect(mapping(Tile::toString, Collectors.joining(", ")));
+        return tilesWithNegativeAmount.stream().collect(mapping(Tile::toString, joining(", ")));
     }
 }

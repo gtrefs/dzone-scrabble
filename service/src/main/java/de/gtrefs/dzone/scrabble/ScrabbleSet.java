@@ -58,11 +58,15 @@ public class ScrabbleSet {
         return new ScrabbleSet(newSet);
     }
 
-    public List<Tile> getTilesWithNegativeAmount() {
+    public List<Tile> getTilesWhichHaveBeenOverdrawn() {
         return amountByTiles.entrySet()
                 .stream()
                 .filter(e -> e.getValue() < 0L)
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toList());
+    }
+
+    public Boolean hasTilesWhichHaveBeenOverDrawn() {
+        return !getTilesWhichHaveBeenOverdrawn().isEmpty();
     }
 }

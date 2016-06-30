@@ -11,10 +11,6 @@ public class Tile {
         this.letter = letter;
     }
 
-    public char getLetter(){
-        return letter;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

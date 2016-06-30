@@ -9,28 +9,28 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.io.PrintStream;
 
-import static de.gtrefs.dzone.scrabble.ScrabbleSetPrinter.emptyMessage;
-import static de.gtrefs.dzone.scrabble.ScrabbleSetPrinter.errorForNegativeAmount;
+import static de.gtrefs.dzone.scrabble.ScrabbleSetPrinter.messageForEmptyScrabbleSet;
+import static de.gtrefs.dzone.scrabble.ScrabbleSetPrinter.errorForOverdrawnTiles;
 import static de.gtrefs.dzone.scrabble.ScrabbleSetPrinter.orderedByAmountOfTiles;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
-public class VerifyScrabbleSetFeature {
+public class RemoveTilesFromScrabbleSetFeature {
 
     @Mock
     PrintStream printStream;
 
-    ScrabbleSetPrinter orderedWithEmptyMessage;
+    ScrabbleSetPrinter scrabbleSetPrinter;
 
     ScrabbleService service;
 
     @Before
     public void setUp(){
-        orderedWithEmptyMessage = errorForNegativeAmount("Invalid input. More %s's have been taken from the bag than possible.",
-                emptyMessage("Scrabble set is empty.",
+        scrabbleSetPrinter = errorForOverdrawnTiles("Invalid input. More %s's have been taken from the bag than possible.",
+                messageForEmptyScrabbleSet("Scrabble set is empty.",
                 orderedByAmountOfTiles())).apply(printStream);
-        service = new ScrabbleService(orderedWithEmptyMessage);
+        service = new ScrabbleService(scrabbleSetPrinter);
     }
 
     @Test
