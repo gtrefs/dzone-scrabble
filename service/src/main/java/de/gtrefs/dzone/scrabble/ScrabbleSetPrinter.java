@@ -38,22 +38,26 @@ public interface ScrabbleSetPrinter extends Consumer<ScrabbleSet> {
     static Function<PrintStream, ScrabbleSetPrinter> messageForEmptyScrabbleSet(String message,
                                                                                 Function<PrintStream, ScrabbleSetPrinter> next) {
         return out -> set -> {
-          if(set.isEmpty())
-              out.println(message);
-          else
-              next.apply(out).accept(set);
+            boolean condition = set.isEmpty();
+            orElse(next, out, set, condition, message);
         };
     }
 
     static Function<PrintStream, ScrabbleSetPrinter> errorForOverdrawnTiles(String message,
                                                                             Function<PrintStream, ScrabbleSetPrinter> next) {
         return out -> set -> {
-            if(set.hasTilesWhichHaveBeenOverDrawn()){
-                out.println(String.format(message, joinToString(set.getTilesWhichHaveBeenOverdrawn())));
-            }else{
-                next.apply(out).printSet(set);
-            }
+            boolean condition = set.hasTilesWhichHaveBeenOverDrawn();
+            String formattedMessage = String.format(message, joinToString(set.getTilesWhichHaveBeenOverdrawn()));
+            orElse(next, out, set, condition, formattedMessage);
         };
+    }
+
+    static void orElse(Function<PrintStream, ScrabbleSetPrinter> next, PrintStream out, ScrabbleSet set, Boolean condition, String formattedMessage) {
+        if(condition){
+            out.println(formattedMessage);
+        }else{
+            next.apply(out).printSet(set);
+        }
     }
 
     static String joinToString(List<Tile> tilesWithNegativeAmount) {

@@ -28,7 +28,7 @@ public class ScrabbleSet {
     }
 
     public ScrabbleSet() {
-        this(Collections.<Tile>emptyList());
+        this(Collections.emptyList());
     }
 
     public ScrabbleSet(Tile... tiles) {
@@ -66,7 +66,7 @@ public class ScrabbleSet {
                 .collect(Collectors.toList());
     }
 
-    public Boolean hasTilesWhichHaveBeenOverDrawn() {
+    public boolean hasTilesWhichHaveBeenOverDrawn() {
         return !getTilesWhichHaveBeenOverdrawn().isEmpty();
     }
 }
