@@ -88,6 +88,13 @@ public class ScrabbleSetShould {
     }
 
     @Test
+    public void have_an_empty_scrabble_set_factory_method() throws Exception {
+        final ScrabbleSet set = ScrabbleSet.empty();
+
+        assertThat(set.isEmpty(), is(true));
+    }
+    
+    @Test
     public void remove_multiple_tiles_from_given_scrabble_set(){
         final ScrabbleSet set = ScrabbleSet.englishSet();
 

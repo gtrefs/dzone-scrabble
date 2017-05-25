@@ -23,6 +23,10 @@ public class ScrabbleSet {
         return ScrabbleSet.decode(englishScrabbleSet);
     }
 
+    public static ScrabbleSet empty() {
+        return new ScrabbleSet();
+    }
+
     public ScrabbleSet(Tile tile) {
         this(Collections.singletonList(tile));
     }
@@ -69,4 +73,5 @@ public class ScrabbleSet {
     public boolean hasTilesWhichHaveBeenOverDrawn() {
         return !getTilesWhichHaveBeenOverdrawn().isEmpty();
     }
+
 }
