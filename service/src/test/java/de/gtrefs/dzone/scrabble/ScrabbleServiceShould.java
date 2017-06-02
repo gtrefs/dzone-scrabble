@@ -23,7 +23,7 @@ public class ScrabbleServiceShould {
         final ScrabbleService service = new ScrabbleService(printer);
         final ScrabbleSet set = new ScrabbleSet();
 
-        service.print(set);
+        service.printScrabbleSet(set);
 
         verify(printer).printSet(set);
     }

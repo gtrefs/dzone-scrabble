@@ -11,7 +11,7 @@ public class ScrabbleService {
         return from.remove(ScrabbleSet.decode(encodedScrabbleSet));
     }
 
-    public void print(ScrabbleSet set) {
+    public void printScrabbleSet(ScrabbleSet set) {
         printer.printSet(set);
     }
 }
